@@ -1,0 +1,332 @@
+{
+    "Delimiter": ",",
+    "MaxColumns": 29,
+    "Tests": [
+      {
+        "Column": 1,
+        "Test": "IsDate",
+        "DateTimeValue": "MM/dd/yyyy"
+      },
+      {
+        "Column": 2,
+        "Test": "IsTime",
+        "DateTimeValue": "hh:mm"
+      },
+      {
+        "Column": 3,
+        "Test": "IsTrimmed"
+      },
+      {
+        "Column": 3,
+        "Test": "NotNumber"
+      },
+      {
+        "Column": 3,
+        "Test": "MinLength",
+        "Length": 5
+      },
+      {
+        "Column": 3,
+        "Test": "MaxLength",
+        "Length": 13
+      },
+      {
+        "Column": 4,
+        "Test": "IsNumber"
+      },
+      {
+        "Column": 5,
+        "Test": "IsNumberDecimal"
+      },
+      {
+        "Column": 6,
+        "Test": "IsNumberDecimal"
+      },
+      {
+        "Column": 7,
+        "Test": "BeginsWith",
+        "Values": "("
+      },
+      {
+        "Column": 7,
+        "Test": "EndsWith",
+        "Values": ")"
+      },
+      {
+        "Column": 8,
+        "Test": "MinLength",
+        "Length": 2
+      },
+      {
+        "Column": 8,
+        "Test": "MaxLength",
+        "Length": 32
+      },
+      {
+        "Column": 9,
+        "Test": "MinLength",
+        "Length": 1
+      },
+      {
+        "Column": 9,
+        "Test": "MaxLength",
+        "Length": 32
+      },
+      {
+        "Column": 10,
+        "Test": "MinLength",
+        "Length": 2
+      },
+      {
+        "Column": 10,
+        "Test": "MaxLength",
+        "Length": 40
+      },
+      {
+        "Column": 11,
+        "Test": "IsNumber"
+      },
+      {
+        "Column": 11,
+        "Test": "MinValue",
+        "Value": 0
+      },
+      {
+        "Column": 11,
+        "Test": "MaxValue",
+        "Value": 43
+      },
+      {
+        "Column": 12,
+        "Test": "IsNumber"
+      },
+      {
+        "Column": 12,
+        "Test": "MinValue",
+        "Value": 0
+      },
+      {
+        "Column": 12,
+        "Test": "MaxValue",
+        "Value": 8
+      },
+      {
+        "Column": 13,
+        "Test": "IsNumber"
+      },
+      {
+        "Column": 13,
+        "Test": "MinValue",
+        "Value": 0
+      },
+      {
+        "Column": 13,
+        "Test": "MaxValue",
+        "Value": 27
+      },
+      {
+        "Column": 14,
+        "Test": "IsNumber"
+      },
+      {
+        "Column": 14,
+        "Test": "MinValue",
+        "Value": 0
+      },
+      {
+        "Column": 14,
+        "Test": "MaxValue",
+        "Value": 6
+      },
+      {
+        "Column": 15,
+        "Test": "IsNumber"
+      },
+      {
+        "Column": 15,
+        "Test": "MinValue",
+        "Value": 0
+      },
+      {
+        "Column": 15,
+        "Test": "MaxValue",
+        "Value": 4
+      },
+      {
+        "Column": 16,
+        "Test": "IsNumber"
+      },
+      {
+        "Column": 16,
+        "Test": "MinValue",
+        "Value": 0
+      },
+      {
+        "Column": 16,
+        "Test": "MaxValue",
+        "Value": 2
+      },
+      {
+        "Column": 17,
+        "Test": "IsNumber"
+      },
+      {
+        "Column": 17,
+        "Test": "MinValue",
+        "Value": 0
+      },
+      {
+        "Column": 17,
+        "Test": "MaxValue",
+        "Value": 43
+      },
+      {
+        "Column": 18,
+        "Test": "IsNumber"
+      },
+      {
+        "Column": 18,
+        "Test": "MinValue",
+        "Value": 0
+      },
+      {
+        "Column": 18,
+        "Test": "MaxValue",
+        "Value": 5
+      },
+      {
+        "Column": 19,
+        "Test": "IsTrimmed"
+      },
+      {
+        "Column": 19,
+        "Test": "MinLength",
+        "Length": 0
+      },
+      {
+        "Column": 19,
+        "Test": "MaxLength",
+        "Length": 53
+      },
+      {
+        "Column": 20,
+        "Test": "IsTrimmed"
+      },
+      {
+        "Column": 20,
+        "Test": "MinLength",
+        "Length": 0
+      },
+      {
+        "Column": 20,
+        "Test": "MaxLength",
+        "Length": 53
+      },
+      {
+        "Column": 21,
+        "Test": "IsTrimmed"
+      },
+      {
+        "Column": 21,
+        "Test": "MinLength",
+        "Length": 0
+      },
+      {
+        "Column": 21,
+        "Test": "MaxLength",
+        "Length": 53
+      },
+      {
+        "Column": 22,
+        "Test": "IsTrimmed"
+      },
+      {
+        "Column": 22,
+        "Test": "MinLength",
+        "Length": 0
+      },
+      {
+        "Column": 22,
+        "Test": "MaxLength",
+        "Length": 43
+      },
+      {
+        "Column": 23,
+        "Test": "IsTrimmed"
+      },
+      {
+        "Column": 23,
+        "Test": "MinLength",
+        "Length": 0
+      },
+      {
+        "Column": 23,
+        "Test": "MaxLength",
+        "Length": 43
+      },
+      {
+        "Column": 24,
+        "Test": "IsNumber"
+      },
+      {
+        "Column": 24,
+        "Test": "MinValue",
+        "Value": 22
+      },
+      {
+        "Column": 24,
+        "Test": "MaxValue",
+        "Value": 4730675
+      },
+      {
+        "Column": 25,
+        "Test": "MinLength",
+        "Length": 0
+      },
+      {
+        "Column": 25,
+        "Test": "MaxLength",
+        "Length": 38
+      },
+      {
+        "Column": 26,
+        "Test": "MinLength",
+        "Length": 0
+      },
+      {
+        "Column": 26,
+        "Test": "MaxLength",
+        "Length": 38
+      },
+      {
+        "Column": 27,
+        "Test": "MinLength",
+        "Length": 0
+      },
+      {
+        "Column": 27,
+        "Test": "MaxLength",
+        "Length": 35
+      },
+      {
+        "Column": 28,
+        "Test": "MinLength",
+        "Length": 0
+      },
+      {
+        "Column": 28,
+        "Test": "MaxLength",
+        "Length": 35
+      },
+      {
+        "Column": 29,
+        "Test": "MinLength",
+        "Length": 0
+      },
+      {
+        "Column": 29,
+        "Test": "MaxLength",
+        "Length": 35
+      }
+    ]
+}

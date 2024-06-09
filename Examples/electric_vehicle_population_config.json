@@ -1,0 +1,246 @@
+{
+    "Delimiter": ",",
+    "MaxColumns": 17,
+    "Tests": [
+      {
+        "Column": 1,
+        "Test": "IsLength",
+        "Length": 10
+      },        
+      {
+        "Column": 1,
+        "Test": "IsTrimmed"
+      },
+      {
+        "Column": 1,
+        "Test": "NotEmpty"
+      },
+      {
+        "Column": 1,
+        "Test": "NotNumber"
+      },         
+      {
+        "Column": 2,
+        "Test": "IsTrimmed"
+      },
+      {
+        "Column": 2,
+        "Test": "MaxLength",
+        "Length": 20
+      },   
+      {
+        "Column": 2,
+        "Test": "NotNumber"
+      },
+      {
+        "Column": 3,
+        "Test": "IsTrimmed"
+      },   
+      {
+        "Column": 3,
+        "Test": "NotNumber"
+      },  
+      {
+        "Column": 3,
+        "Test": "MaxLength",
+        "Length": 24
+      },
+      {
+        "Column": 4,
+        "Test": "IsLength",
+        "Length": 2
+      },
+      {
+        "Column": 4,
+        "Test": "IsTrimmed"
+      },
+      {
+        "Column": 4,
+        "Test": "NotEmpty"
+      },
+      {
+        "Column": 4,
+        "Test": "NotNumber"
+      },
+      {
+        "Column": 5,
+        "Test": "MinLength",
+        "Length": 4
+      },
+      {
+        "Column": 5,
+        "Test": "MaxLength",
+        "Length": 5
+      },      
+      {
+        "Column": 5,
+        "Test": "IsNumber"
+      },
+      {
+        "Column": 6,
+        "Test": "IsLength",
+        "Length": 4
+      },
+      {
+        "Column": 6,
+        "Test": "IsNumber"
+      },
+      {
+        "Column": 6,
+        "Test": "MaxValue",
+        "Value": 2024
+      },
+      {
+        "Column": 6,
+        "Test": "MinValue",
+        "Value": 1997
+      },
+      {
+        "Column": 6,
+        "Test": "NoEmpty"
+      },
+      {
+        "Column": 7,
+        "Test": "IsTrimmed"
+      },
+      {
+        "Column": 7,
+        "Test": "MinLength",
+        "Length": 3
+      },
+      {
+        "Column": 7,
+        "Test": "MaxLength",
+        "Length": 20
+      },
+      {
+        "Column": 7,
+        "Test": "NotEmpty"
+      },
+      {
+        "Column": 7,
+        "Test": "NotNumber"
+      },
+      {
+        "Column": 8,
+        "Test": "IsTrimmed"
+      },
+      {
+        "Column": 8,
+        "Test": "MinLength",
+        "Length": 2
+      },
+      {
+        "Column": 8,
+        "Test": "MaxLength",
+        "Length": 24
+      },
+      {
+        "Column": 8,
+        "Test": "NotEmpty"
+      },
+      {
+        "Column": 9,
+        "Test": "HasOneOf",
+        "Values": "Battery Electric Vehicle (BEV),Plug-in Hybrid Electric Vehicle (PHEV)"
+      },
+      {
+        "Column": 10,
+        "Test": "HasOneOf",
+        "Values": "Clean Alternative Fuel Vehicle Eligible,Eligibility unknown as battery range has not been researched,Not eligible due to low battery range"
+      },
+      {
+        "Column": 11,
+        "Test": "IsNumber"
+      },
+      {
+        "Column": 11,
+        "Test": "MaxValue",
+        "Value": 337
+      },
+      {
+        "Column": 11,
+        "Test": "MinValue",
+        "Value": 0
+      },
+      {
+        "Column": 12,
+        "Test": "IsNumber"
+      },
+      {
+        "Column": 12,
+        "Test": "MaxValue",
+        "Value": 845000
+      },
+      {
+        "Column": 12,
+        "Test": "MinValue",
+        "Value": 0
+      },
+      {
+        "Column": 13,
+        "Test": "IsNumber"
+      },
+      {
+        "Column": 13,
+        "Test": "MaxValue",
+        "Value": 49
+      },
+      {
+        "Column": 13,
+        "Test": "MinValue",
+        "Value": 1
+      },
+      {
+        "Column": 14,
+        "Test": "IsNumber"
+      },
+      {
+        "Column": 14,
+        "Test": "MaxValue",
+        "Value": 479254772
+      },
+      {
+        "Column": 14,
+        "Test": "MinValue",
+        "Value": 4385
+      },
+      {
+        "Column": 15,
+        "Test": "NotNumber"
+      },
+      {
+        "Column": 15,
+        "Test": "BeginsWith",
+        "Values": "POINT ("
+      },
+      {
+        "Column": 16,
+        "Test": "NotNumber"
+      },
+      {
+        "Column": 16,
+        "Test": "MinLength",
+        "Length": 0
+      },
+      {
+        "Column": 16,
+        "Test": "MaxLength",
+        "Length": 112
+      },
+      {
+        "Column": 17,
+        "Test": "IsNumber"
+      },
+      {
+        "Column": 17,
+        "Test": "MinValue",
+        "Value": 1081041901
+      },
+      {
+        "Column": 17,
+        "Test": "MaxValue",
+        "Value": 56033000100
+      }
+    ]
+}
