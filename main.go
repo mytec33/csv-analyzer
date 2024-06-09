@@ -5,7 +5,7 @@ import (
 )
 
 func main() {
-	config, err := ReadConfigFromFile("motor_vehicle_collisions_config.json")
+	config, err := ReadConfigFromFile("./Examples/motor_vehicle_collisions_config.json")
 	if err != nil {
 		log.Fatalf("Error reading config file: %v", err)
 	}
