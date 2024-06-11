@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"strconv"
 	"strings"
+	"sync"
 	"time"
 	"unicode"
 )
@@ -22,6 +23,21 @@ func processCSVData(config CsvConfiguration, data [][]string) {
 				}
 			}
 			//			}
+		}
+	}
+}
+
+func processRecord(config CsvConfiguration, data []string, r int, wg *sync.WaitGroup) {
+	defer wg.Done()
+
+	for c, columnValue := range data {
+		for _, test := range config.Tests {
+			if test.Column == c+1 {
+				err := processTest(test, columnValue)
+				if err != nil {
+					fmt.Println("Row " + strconv.Itoa(r+3) + ", Col " + strconv.Itoa(c+1) + ":\n" + err.Error())
+				}
+			}
 		}
 	}
 }

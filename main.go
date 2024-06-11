@@ -2,6 +2,7 @@ package main
 
 import (
 	"log"
+	"sync"
 )
 
 func main() {
@@ -17,5 +18,15 @@ func main() {
 		records = records[1:]
 	}
 
-	processCSVData(config, records)
+	var wg sync.WaitGroup
+
+	// Don't delete! Have command line option to run single core or mutli
+	// processCSVData(config, records)
+	for r, record := range records {
+		wg.Add(1)
+
+		go processRecord(config, record, r, &wg)
+	}
+
+	wg.Wait()
 }
