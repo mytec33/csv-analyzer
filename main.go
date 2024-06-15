@@ -7,15 +7,17 @@ import (
 )
 
 func main() {
+	configFile := flag.String("cfile", "", "json configuration file containing CSV tests")
+	csvFile := flag.String("csv", "", "csv file to analyze")
 	multiCore := flag.Bool("multicore", false, "run using multiple cores")
 	flag.Parse()
 
-	config, err := ReadConfigFromFile("./Examples/motor_vehicle_collisions_config.json")
+	config, err := ReadConfigFromFile(*configFile)
 	if err != nil {
 		log.Fatalf("Error reading config file: %v", err)
 	}
 
-	records := readCsvFile("./TestFiles/Motor_Vehicle_Collisions_-_Crashes.csv", config.MaxColumns)
+	records := readCsvFile(*csvFile, config.MaxColumns)
 
 	hasHeader := true
 	if hasHeader {
