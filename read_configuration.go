@@ -20,6 +20,14 @@ type CsvConfiguration struct {
 	Tests      []CsvTest `json:"Tests"`
 }
 
+func PreprocessTests(tests []CsvTest) map[int][]CsvTest {
+	testsByColumn := make(map[int][]CsvTest)
+	for _, test := range tests {
+		testsByColumn[test.Column] = append(testsByColumn[test.Column], test)
+	}
+	return testsByColumn
+}
+
 func ReadConfigFromFile(filename string) (CsvConfiguration, error) {
 	var config CsvConfiguration
 

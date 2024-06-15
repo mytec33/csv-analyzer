@@ -15,6 +15,7 @@ func readCsvFile(filePath string, maxColumns int) [][]string {
 
 	csvReader := csv.NewReader(f)
 	csvReader.FieldsPerRecord = maxColumns
+	csvReader.ReuseRecord = true
 	records, err := csvReader.ReadAll()
 	if err != nil {
 		log.Fatal("Unable to parse file as CSV for "+filePath, err)

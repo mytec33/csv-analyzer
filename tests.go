@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"strconv"
 	"strings"
-	"sync"
 	"time"
 	"unicode"
 )
@@ -27,14 +26,11 @@ func processCSVData(config CsvConfiguration, data [][]string) {
 	}
 }
 
-func processRecord(config CsvConfiguration, data []string, r int, wg *sync.WaitGroup) {
-	defer wg.Done()
-
+func processRecord(data []string, r int, testsByColumn map[int][]CsvTest) {
 	for c, columnValue := range data {
-		for _, test := range config.Tests {
-			if test.Column == c+1 {
-				err := processTest(test, columnValue)
-				if err != nil {
+		if tests, ok := testsByColumn[c+1]; ok { // Column index is 1-based
+			for _, test := range tests {
+				if err := processTest(test, columnValue); err != nil {
 					fmt.Println("Row " + strconv.Itoa(r+3) + ", Col " + strconv.Itoa(c+1) + ":\n" + err.Error())
 				}
 			}
@@ -80,54 +76,48 @@ func processTest(test CsvTest, data string) error {
 }
 
 func BeginsWith(test CsvTest, data string) error {
-	if len(data) != 0 {
-		values := strings.Split(test.Values, ",")
-
-		for _, value := range values {
-			if strings.HasPrefix(data, value) {
-				return nil
-			}
-		}
-
-		return errors.New("data does not begin with provided value(s)")
+	if len(data) == 0 {
+		return nil
 	}
 
-	// empty return nothing
-	return nil
+	values := strings.Split(test.Values, ",")
+	for _, value := range values {
+		if strings.HasPrefix(data, value) {
+			return nil
+		}
+	}
+
+	return errors.New("data does not begin with provided value(s)")
 }
 
 func EndsWith(test CsvTest, data string) error {
-	if len(data) != 0 {
-		values := strings.Split(test.Values, ",")
-
-		for _, value := range values {
-			if strings.HasSuffix(data, value) {
-				return nil
-			}
-		}
-
-		return errors.New("data does not end with provided value(s)")
+	if len(data) == 0 {
+		return nil
 	}
 
-	// empty return nothing
-	return nil
+	values := strings.Split(test.Values, ",")
+	for _, value := range values {
+		if strings.HasSuffix(data, value) {
+			return nil
+		}
+	}
+
+	return errors.New("data does not end with provided value(s)")
 }
 
 func HasOneOf(test CsvTest, data string) error {
-	if len(data) != 0 {
-		values := strings.Split(test.Values, ",")
-
-		for _, value := range values {
-			if value == data {
-				return nil
-			}
-		}
-
-		return errors.New("data not equal to provided values")
+	if len(data) == 0 {
+		return nil
 	}
 
-	// empty return nothing
-	return nil
+	values := strings.Split(test.Values, ",")
+	for _, value := range values {
+		if value == data {
+			return nil
+		}
+	}
+
+	return errors.New("data not equal to provided values")
 }
 
 // Maybe do this by pointer for performance increase?
@@ -176,56 +166,46 @@ func IsTime(test CsvTest, data string) error {
 func IsLength(test CsvTest, data string) error {
 	length := len(data)
 
-	if length != 0 {
-		if length != test.Length {
-			return errors.New("IsLength: length " + strconv.Itoa(length) +
-				" data not equal to configured length " + strconv.Itoa(test.Length))
-		}
+	if length != 0 && length != test.Length {
+		return errors.New("IsLength: length " + strconv.Itoa(length) +
+			" data not equal to configured length " + strconv.Itoa(test.Length))
 	}
 
 	return nil
 }
 
 func IsNumber(test CsvTest, data string) error {
-	if len(data) != 0 {
-		_, err := strconv.Atoi(data)
-		if err != nil {
-			return errors.New("IsNumber: non number value found ***" + data + "***")
-		}
+	if len(data) == 0 {
+		return nil
+	}
+
+	_, err := strconv.Atoi(data)
+	if err != nil {
+		return errors.New("IsNumber: non number value found ***" + data + "***")
 	}
 
 	return nil
 }
 
 func IsNumberDecimal(test CsvTest, data string) error {
-	if len(data) != 0 {
-		_, err := strconv.ParseFloat(data, 64)
-		if err != nil {
-			return errors.New("IsNumberDecimal: non decimal number value found")
-		}
+	if len(data) == 0 {
+		return nil
+	}
+
+	if _, err := strconv.ParseFloat(data, 64); err != nil {
+		return errors.New("IsNumberDecimal: non decimal number value found")
 	}
 
 	return nil
 }
 
 func IsTrimmed(test CsvTest, data string) error {
-	if len(data) != 0 {
-		errorResult := ""
+	if len(data) == 0 {
+		return nil
+	}
 
-		if unicode.IsSpace(rune(data[0])) {
-			errorResult = "leading data is not trimmed"
-		}
-
-		if unicode.IsSpace(rune(data[len(data)-1])) {
-			if errorResult != "" {
-				errorResult += "\n"
-			}
-			errorResult += "trailing data is not trimmed"
-		}
-
-		if errorResult != "" {
-			return errors.New(errorResult)
-		}
+	if unicode.IsSpace(rune(data[0])) || unicode.IsSpace(rune(data[len(data)-1])) {
+		return errors.New("data is not trimmed")
 	}
 
 	return nil
@@ -234,27 +214,27 @@ func IsTrimmed(test CsvTest, data string) error {
 func MaxLength(test CsvTest, data string) error {
 	length := len(data)
 
-	if length != 0 {
-		if length > test.Length {
-			return errors.New("MaxLength: length of " + strconv.Itoa(length) +
-				" longer than maximum length of " + strconv.Itoa(test.Length))
-		}
+	if length != 0 && length > test.Length {
+		return errors.New("MaxLength: length of " + strconv.Itoa(length) +
+			" longer than maximum length of " + strconv.Itoa(test.Length))
 	}
 
 	return nil
 }
 
 func MaxValue(test CsvTest, data string) error {
-	if len(data) != 0 {
-		v, err := strconv.ParseInt(data, 10, 64)
-		if err != nil {
-			return errors.New("MaxValue: data is not a number " + data)
-		}
+	if len(data) == 0 {
+		return nil
+	}
 
-		if v > test.Value {
-			return errors.New("MaxValue: " + strconv.FormatInt(v, 10) +
-				" higher than maximum length of " + strconv.FormatInt(test.Value, 10))
-		}
+	v, err := strconv.ParseInt(data, 10, 64)
+	if err != nil {
+		return errors.New("MaxValue: data is not a number " + data)
+	}
+
+	if v > test.Value {
+		return errors.New("MaxValue: " + strconv.FormatInt(v, 10) +
+			" higher than maximum value of " + strconv.FormatInt(test.Value, 10))
 	}
 
 	return nil
@@ -263,27 +243,27 @@ func MaxValue(test CsvTest, data string) error {
 func MinLength(test CsvTest, data string) error {
 	length := len(data)
 
-	if length != 0 {
-		if length < test.Length {
-			return errors.New("MinLength: length of " + strconv.Itoa(length) +
-				" shorter than minimum length of " + strconv.Itoa(test.Length))
-		}
+	if length != 0 && length < test.Length {
+		return errors.New("MinLength: length of " + strconv.Itoa(length) +
+			" shorter than minimum length of " + strconv.Itoa(test.Length))
 	}
 
 	return nil
 }
 
 func MinValue(test CsvTest, data string) error {
-	if len(data) != 0 {
-		v, err := strconv.ParseInt(data, 10, 64)
-		if err != nil {
-			return errors.New("MinValue: data is not a number " + data)
-		}
+	if len(data) == 0 {
+		return nil
+	}
 
-		if v < test.Value {
-			return errors.New("MinValue: " + strconv.FormatInt(v, 10) +
-				" lower than minimum length of " + strconv.FormatInt(test.Value, 10))
-		}
+	v, err := strconv.ParseInt(data, 10, 64)
+	if err != nil {
+		return errors.New("MinValue: data is not a number " + data)
+	}
+
+	if v < test.Value {
+		return errors.New("MinValue: " + strconv.FormatInt(v, 10) +
+			" lower than minimum value of " + strconv.FormatInt(test.Value, 10))
 	}
 
 	return nil
@@ -298,11 +278,12 @@ func NotEmpty(test CsvTest, data string) error {
 }
 
 func NotNumber(test CsvTest, data string) error {
-	if len(data) != 0 {
-		_, err := strconv.Atoi(data)
-		if err == nil {
-			return errors.New("NotNumber: number value found")
-		}
+	if len(data) == 0 {
+		return nil
+	}
+
+	if _, err := strconv.Atoi(data); err == nil {
+		return errors.New("NotNumber: number value found")
 	}
 
 	return nil
