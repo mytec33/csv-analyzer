@@ -1,11 +1,15 @@
 package main
 
 import (
+	"flag"
 	"log"
 	"sync"
 )
 
 func main() {
+	multiCore := flag.Bool("multicore", false, "run using multiple cores")
+	flag.Parse()
+
 	config, err := ReadConfigFromFile("./Examples/motor_vehicle_collisions_config.json")
 	if err != nil {
 		log.Fatalf("Error reading config file: %v", err)
@@ -18,15 +22,18 @@ func main() {
 		records = records[1:]
 	}
 
-	var wg sync.WaitGroup
+	if *multiCore {
+		var wg sync.WaitGroup
 
-	// Don't delete! Have command line option to run single core or mutli
-	// processCSVData(config, records)
-	for r, record := range records {
-		wg.Add(1)
+		for r, record := range records {
+			wg.Add(1)
 
-		go processRecord(config, record, r, &wg)
+			go processRecord(config, record, r, &wg)
+		}
+
+		wg.Wait()
+	} else {
+		processCSVData(config, records)
 	}
 
-	wg.Wait()
 }
