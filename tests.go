@@ -48,6 +48,8 @@ func processTest(test CsvTest, data string) error {
 		return HasOneOf(test, data)
 	case "IsDate":
 		return IsDate(test, data)
+	case "IsDateTime":
+		return IsDateTime(test, data)
 	case "IsLength":
 		return IsLength(test, data)
 	case "IsNumber":
@@ -137,6 +139,13 @@ func mapTimeStringToGoString(data string) string {
 	return data
 }
 
+func mapPMStringToGoString(data string) string {
+	data = strings.Replace(data, "PM", "PM", -1)
+	data = strings.Replace(data, "AM", "PM", -1)
+
+	return data
+}
+
 func IsDate(test CsvTest, data string) error {
 	if len(data) != 0 {
 		test.DateTimeValue = mapDateStringToGoString(test.DateTimeValue)
@@ -144,6 +153,25 @@ func IsDate(test CsvTest, data string) error {
 		_, err := time.Parse(test.DateTimeValue, data)
 		if err != nil {
 			return errors.New("IsDate: data is not a date in the format of " + test.DateTimeValue)
+		}
+	}
+
+	return nil
+}
+
+func IsDateTime(test CsvTest, data string) error {
+	if len(data) != 0 {
+		test.DateTimeValue = mapDateStringToGoString(test.DateTimeValue)
+		test.DateTimeValue = mapTimeStringToGoString(test.DateTimeValue)
+		test.DateTimeValue = mapPMStringToGoString(test.DateTimeValue)
+
+		if strings.Contains(data, "PM") && strings.Contains(data, "15") {
+			data = strings.Replace(test.DateTimeValue, "PM", "", -1)
+		}
+
+		_, err := time.Parse(test.DateTimeValue, data)
+		if err != nil {
+			return errors.New("IsDate: data " + data + " is not a date in the format of " + test.DateTimeValue)
 		}
 	}
 
