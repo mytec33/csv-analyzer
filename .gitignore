@@ -4,3 +4,4 @@ TestFiles/*
 ./*.json
 
 csv_analyzer
+csv_analyzer.exe
